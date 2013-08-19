@@ -6,10 +6,10 @@ package 'php-pear'
 package 'phpunit'
 
 execute "phpunit" do
-    command "pear upgrade pear"
-    command "pear channel-discover pear.phpunit.de"
-    command "pear channel-discover components.ez.no"
-    command "pear install --alldeps phpunit/PHPUnit"
+    command "sudo pear upgrade pear"
+    command "sudo pear channel-discover pear.phpunit.de"
+    command "sudo pear channel-discover components.ez.no"
+    command "sudo pear install --alldeps phpunit/PHPUnit"
 end
 
 execute "start-php5-fpm" do
