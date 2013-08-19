@@ -9,6 +9,7 @@ execute "phpunit" do
     command "sudo pear upgrade pear"
     command "sudo pear channel-discover pear.phpunit.de"
     command "sudo pear channel-discover components.ez.no"
+    command "sudo pear channel-discover pear.symfony.com"
     command "sudo pear install --alldeps phpunit/PHPUnit"
 end
 
