@@ -1,7 +1,7 @@
 # --- Install packages we need ---
 package 'make'
 package 'php5-fpm'
-package 'php5'
+# package 'php5'
 package 'php5-cli'
 package 'php-pear'
 package 'phpunit'
