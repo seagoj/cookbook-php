@@ -6,11 +6,7 @@ package 'php-pear'
 package 'phpunit'
 
 execute "phpunit" do
-    command "sudo pear upgrade pear"
-    command "sudo pear channel-discover pear.phpunit.de"
-    command "sudo pear channel-discover components.ez.no"
-    command "sudo pear channel-discover pear.symfony.com"
-    command "sudo pear install --alldeps phpunit/PHPUnit"
+    command "sudo pear upgrade pear && pear channel-discover pear.phpunit.de && sudo pear channel-discover components.ez.no && sudo pear channel-discover pear.symfony.com && sudo pear install --alldeps phpunit/PHPUnit"
 end
 
 execute "start-php5-fpm" do
