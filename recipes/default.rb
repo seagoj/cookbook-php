@@ -1,18 +1,39 @@
 # --- Install packages we need ---
-package 'make'
+packages = %w(make autoconf bison libxml2 libxml2-dev libcurl3 libcurl4-gnutls-dev libmagic-dev)
+
+packages.each do |p|
+    package p
+end
+
 # package 'php5-fpm'
 # package 'php5'
 # package 'php5-cli'
 # package 'php-pear'
 # package 'phpunit'
 
-cookbook_file "/php-5.5.tgz" do
-    source "php-5.5.tgz"
-    mode "0777"
+# cookbook_file "/php-5.5.tgz" do
+#     source "php-5.5.tgz"
+#     mode "0777"
+# end
+
+# execute "Unpack PHP" do
+#    command "cd / && tar -xzf php-5.5.tgz"
+# end
+
+execute "download" do
+    command "mkdir /usr/src && cd /usr/src && wget http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror -O php-5.5.2.tar.bz2"
 end
 
-execute "Unpack PHP" do
-    command "cd / && tar -xzf php-5.5.tgz"
+execute "expand" do
+    command "tar -xvf php-5.5.2.tar.bz2 && cd php-5.5.2"
+end
+
+execute "configure" do
+    command "./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib"
+end
+
+execute "make" do
+    command "make && make test && sudo make install"
 end
 
 execute "phpunit" do
@@ -23,7 +44,7 @@ execute "xdebug" do
     command "sudo pecl install xdebug"
 end
 
-cookbook_file "/etc/php5/cli/php.ini" do
+cookbook_file "/etc/php.ini" do
     source "xdebug-php.ini"
     mode "0777"
 end
