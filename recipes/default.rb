@@ -20,12 +20,13 @@ end
 #    command "cd / && tar -xzf php-5.5.tgz"
 # end
 
-execute "download" do
-    command "cd /usr/src && wget http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror -O php-5.5.2.tar.bz2"
+remote_file "/usr/src/php-5.5.2.tar.bz2" do
+    source "http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror"
+    mode "0777"
 end
 
 execute "expand" do
-    command "cd /usr/src && sudo tar -xvf php-5.5.2.tar.bz2 &&"
+    command "cd /usr/src && sudo tar -xvf php-5.5.2.tar.bz2"
 end
 
 execute "configure" do
