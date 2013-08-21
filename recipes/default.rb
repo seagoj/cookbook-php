@@ -21,19 +21,19 @@ end
 # end
 
 execute "download" do
-    command "mkdir /usr/src && cd /usr/src && wget http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror -O php-5.5.2.tar.bz2"
+    command "cd /usr/src && wget http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror -O php-5.5.2.tar.bz2"
 end
 
 execute "expand" do
-    command "tar -xvf php-5.5.2.tar.bz2 && cd php-5.5.2"
+    command "cd /usr/src && sudo tar -xvf php-5.5.2.tar.bz2 &&"
 end
 
 execute "configure" do
-    command "./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib"
+    command "cd /usr/src/php-5.5.2 && ./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib"
 end
 
 execute "make" do
-    command "make && make test && sudo make install"
+    command "cd /usr/src/php-5.5.2 && make && make test && sudo make install"
 end
 
 execute "phpunit" do
