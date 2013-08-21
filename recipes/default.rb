@@ -1,10 +1,19 @@
 # --- Install packages we need ---
 package 'make'
-package 'php5-fpm'
+# package 'php5-fpm'
 # package 'php5'
-package 'php5-cli'
-package 'php-pear'
-package 'phpunit'
+# package 'php5-cli'
+# package 'php-pear'
+# package 'phpunit'
+
+cookbook_file "/php-5.5.tgz" do
+    source "php-5.5.tgz"
+    mode "0777"
+end
+
+execute "Unpack PHP" do
+    command "cd / && tar -xzf php-5.5.tgz"
+end
 
 execute "phpunit" do
     command "sudo pear upgrade pear && pear channel-discover pear.phpunit.de && sudo pear channel-discover components.ez.no && sudo pear channel-discover pear.symfony.com && sudo pear install --alldeps phpunit/PHPUnit"
@@ -20,4 +29,5 @@ cookbook_file "/etc/php5/cli/php.ini" do
 end
 
 execute "start-php5-fpm" do
-  command "/etc/init.d/php5-fpm start"end
+  command "/etc/init.d/php5-fpm start"
+end
