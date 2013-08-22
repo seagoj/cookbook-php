@@ -25,24 +25,37 @@ remote_file "/usr/src/php-5.5.2.tar.bz2" do
     mode "0777"
 end
 
-execute "expand" do
+execute "Expand PHP tarball" do
     command "cd /usr/src && sudo tar -xvf php-5.5.2.tar.bz2"
 end
 
-execute "configure" do
+execute "Configure PHP" do
     command "cd /usr/src/php-5.5.2 && ./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --with-mysqli --with-openssl --with-curl --with-zlib"
 end
 
-execute "make" do
+execute "Build & Install PHP" do
     command "cd /usr/src/php-5.5.2 && make && make test && sudo make install"
 end
 
-execute "phpunit" do
-    command "sudo pear upgrade pear && pear channel-discover pear.phpunit.de && sudo pear channel-discover components.ez.no && sudo pear channel-discover pear.symfony.com && sudo pear install --alldeps phpunit/PHPUnit"
+execute "Copy PHP-FPM service config" do
+    command = "sudo cp /usr/src/php-5.5.2/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && sudo chmod 755 /etc/init.d/php-fpm && sudo update-rc.d php-fpm defaults"
 end
 
-execute "xdebug" do
-    command "sudo pecl install xdebug"
+cookbook_file "/etc/php-fpm.conf" do
+    source "php-fpm.conf"
+    mode "0777"
+end
+
+execute "Create PHP log directories" do
+    command "sudo mkdir /var/log/php-fpm && sudo mkdir /var/log/php"
+end
+
+execute "Install PECL_HTTP and XDebug" do
+    command "sudo pecl update_channels && sudo pecl install pecl_http xdebug"
+end
+
+execute "Install PHPUnit" do
+    command "sudo pear upgrade pear && pear channel-discover pear.phpunit.de && sudo pear channel-discover components.ez.no && sudo pear channel-discover pear.symfony.com && sudo pear install --alldeps phpunit/PHPUnit"
 end
 
 cookbook_file "/etc/php.ini" do
