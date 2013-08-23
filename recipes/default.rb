@@ -1,5 +1,5 @@
 # --- Install packages we need ---
-%w(make autoconf bison libxml2 libxml2-dev libcurl3 libcurl4-gnutls-dev libmagic-dev).each do |p|
+%w(make autoconf bison libxml2 libxml2-dev libcurl3 libcurl4-gnutls-dev libmagic-dev curl).each do |p|
     package p
 end
 
@@ -51,9 +51,14 @@ execute "Install PECL_HTTP & XDebug" do
     command "pecl update_channels && pecl install pecl_http xdebug"
 end
 
-execute "Install PHPUnit" do
-    user "root"
-    command "pear upgrade pear && pear channel-discover pear.phpunit.de && pear channel-discover components.ez.no && pear channel-discover pear.symfony.com && pear install --alldeps phpunit/PHPUnit"
+# execute "Install PHPUnit" do
+#     user "root"
+#     command "pear upgrade pear && pear channel-discover pear.phpunit.de && pear channel-discover components.ez.no && pear channel-discover pear.symfony.com && pear install --alldeps phpunit/PHPUnit"
+# end
+
+remote_file "/usr/local/bin/composer" do
+    source "https://getcomposer.org/composer.phar"
+    mode "0755"
 end
 
 execute "Start PHP-FPM Service" do
