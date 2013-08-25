@@ -3,27 +3,38 @@
     package p
 end
 
-remote_file "/usr/src/php-5.5.2.tar.bz2" do
-    source "http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror"
-    mode "0777"
+#remote_file "/usr/src/php-5.5.2.tar.bz2" do
+#    source "http://us3.php.net/get/php-5.5.2.tar.bz2/from/us2.php.net/mirror"
+#    mode "0777"
+#end
+
+#execute "Expand PHP tarball" do
+#    cwd "/usr/src"
+#    user "root"
+#    command "tar -xvf php-5.5.2.tar.bz2"
+#end
+
+#execute "Configure PHP" do
+#    cwd "/usr/src/php-5.5.2"
+#    user "root"
+#    command "./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --enable-zip --with-mysqli --with-openssl --with-curl --with-zlib --enable-pcntl"
+#end
+
+#execute "Build & Install PHP" do
+#    cwd "/usr/src/php-5.5.2"
+#    user "root"
+#    command "make && make test && make install"
+#end
+
+cookbook_file "/usr/src/php_5.5.2-1_amd64.deb" do
+    source "php_5.5.2-1_amd64.deb"
+    mode "0755"
 end
 
-execute "Expand PHP tarball" do
+execute "Install PHP from Debian" do
     cwd "/usr/src"
     user "root"
-    command "tar -xvf php-5.5.2.tar.bz2"
-end
-
-execute "Configure PHP" do
-    cwd "/usr/src/php-5.5.2"
-    user "root"
-    command "./configure --prefix=/usr --sysconfdir=/etc --with-config-file-path=/etc --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --enable-opcache --enable-mbstring --enable-mbregex --enable-zip --with-mysqli --with-openssl --with-curl --with-zlib"
-end
-
-execute "Build & Install PHP" do
-    cwd "/usr/src/php-5.5.2"
-    user "root"
-    command "make && make test && make install"
+    command "dpkg -i php_5.5.2-1.amd.deb"
 end
 
 cookbook_file "/etc/php-fpm.conf" do
