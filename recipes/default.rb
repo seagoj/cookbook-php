@@ -34,7 +34,7 @@ end
 execute "Install PHP from Debian" do
     cwd "/usr/src"
     user "root"
-    command "dpkg -i php_5.5.2-1.amd.deb"
+    command "dpkg -i php_5.5.2-1_amd64.deb"
 end
 
 cookbook_file "/etc/php-fpm.conf" do
