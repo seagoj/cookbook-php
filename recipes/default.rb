@@ -47,9 +47,14 @@ cookbook_file "/etc/php.ini" do
     mode "0777"
 end
 
-execute "Copy PHP-FPM service configuration" do
+cookbook_file "/etc/init.d/php-fpm" do
+    source "init.d.php-fpm"
+    mode "0755"
+end
+
+execute "Enable PHP-FPM service" do
     user "root"
-    command "cp /usr/src/php-5.5.2/sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm && chmod 755 /etc/init.d/php-fpm && update-rc.d php-fpm defaults"
+    command "update-rc.d php-fpm defaults"
 end
 
 execute "Create PHP log directories" do
