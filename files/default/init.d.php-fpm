@@ -13,6 +13,8 @@
 prefix=/usr
 exec_prefix=${prefix}
 
+ln -s /var /usr/var
+
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
 php_fpm_CONF=/etc/php-fpm.conf
 php_fpm_PID=${prefix}/var/run/php-fpm.pid
