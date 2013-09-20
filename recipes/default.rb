@@ -51,11 +51,6 @@ execute "Install PECL_HTTP & XDebug" do
     command "pecl update_channels && pecl install pecl_http xdebug"
 end
 
-remote_file "/usr/local/bin/composer" do
-    source "https://getcomposer.org/composer.phar"
-    mode 00755
-end
-
 service "php-fpm" do
     supports :status => true, :restart=>true, :reload=>true
     action [:enable, :restart]
