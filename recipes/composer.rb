@@ -1,5 +1,6 @@
 # Chef Recipe to install composer and run `composer install`
 include_recipe 'php'
+package 'git'
 
 remote_file "/usr/local/bin/composer" do
     source "https://getcomposer.org/composer.phar"
