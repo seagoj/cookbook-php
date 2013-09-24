@@ -7,9 +7,9 @@ remote_file "/usr/local/bin/composer" do
     mode 00755
 end
 
-execute "Installing composer packages" do
-    cwd node[:php][:doc_root]
-    user node[:php][:user]
-    command "composer install"
-end
+#execute "Installing composer packages" do
+#    cwd node[:php][:doc_root]
+#    user node[:php][:user]
+#    command "composer install"
+#end
 
