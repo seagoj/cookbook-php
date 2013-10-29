@@ -22,6 +22,13 @@ cookbook_file "#{node[:php][:config_dir]}/php-fpm.conf" do
     mode 00755
 end
 
+cookbook_file "#{node[:php][:extensions_dir]}/interbase.so" do
+    owner noe[:php][:user]
+    group node[:php][:group]
+    source "interbase.so"
+    mode 00755
+end
+
 cookbook_file "#{node[:php][:config_dir]}/php.ini" do
     owner node[:php][:user]
     group node[:php][:group]
