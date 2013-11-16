@@ -1,4 +1,4 @@
-%w(make autoconf bison libxml2 libxml2-dev libcurl3 libcurl4-gnutls-dev libmagic-dev curl).each do |p|
+%w(make autoconf bison libxml2 libxml2-dev libcurl3 libcurl4-gnutls-dev libmagic-dev curl firebird2.5-classic-common firebird2.5-common firebird2.5-common-doc firebird2.5-server-common firebird2.5-superclassic libfbclient2 libfbembed2.5 libib-util libxslt-dev).each do |p|
     package p
 end
 
@@ -22,12 +22,12 @@ cookbook_file "#{node[:php][:config_dir]}/php-fpm.conf" do
     mode 00755
 end
 
-cookbook_file "#{node[:php][:extensions_dir]}/interbase.so" do
-    owner noe[:php][:user]
-    group node[:php][:group]
-    source "interbase.so"
-    mode 00755
-end
+#cookbook_file "#{node[:php][:extensions_dir]}/interbase.so" do
+#    owner node[:php][:user]
+#    group node[:php][:group]
+#    source "interbase.so"
+#    mode 00755
+#end
 
 cookbook_file "#{node[:php][:config_dir]}/php.ini" do
     owner node[:php][:user]
